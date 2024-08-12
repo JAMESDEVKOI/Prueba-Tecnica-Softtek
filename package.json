@@ -1,0 +1,19 @@
+{
+  "dependencies": {
+    "aws-lambda": "^1.0.7",
+    "aws-sdk": "^2.1672.0",
+    "axios": "^1.7.3"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.143",
+    "@types/node": "^22.2.0",
+    "typescript": "^5.5.4"
+  },
+  "name": "softtek-prueba-tecnica",
+  "description": "Reto Técnico - Backend NodeJS AWS :Softtek:",
+  "version": "1.0.0",
+  "main": "handler.js",
+  "keywords": [],
+  "author": "JAMESESTGER27",
+  "license": "ISC"
+}

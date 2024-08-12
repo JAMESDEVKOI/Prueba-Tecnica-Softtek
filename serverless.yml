@@ -1,0 +1,38 @@
+# "org" ensures this Service is used with the correct Serverless Framework Access Key.
+org: jamesdev
+# "service" is the name of this project. This will also be added to your AWS resource names.
+service: Softtek-Prueba-Tecnica
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: us-east-2
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:*
+      Resource: 'arn:aws:dynamodb:us-east-2:481665110873:table/Sofftek'
+
+functions:
+  getPeoples:
+    handler: src/people/func/getPeoples.handler
+    events:
+      - httpApi:
+          path: /people
+          method: GET
+resources:
+  Resources:
+    TaskTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Sofftek
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+        KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+
+
+         
