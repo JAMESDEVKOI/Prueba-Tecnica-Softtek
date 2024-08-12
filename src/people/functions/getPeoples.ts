@@ -9,8 +9,8 @@ const peopleController = new PeopleController(
         new DynamoDBPeopleRepository()
     )
 )
-export const handler = async (event: APIGatewayProxyEventV2): Promise<APIGatewayProxyStructuredResultV2> => {
-
+export const handler = async (event: APIGatewayProxyEventV2, context: any): Promise<APIGatewayProxyStructuredResultV2> => {
+    console.log(JSON.stringify(event), JSON.stringify(context), "awa")
     const response = await peopleController.exec(event)
 
     return {

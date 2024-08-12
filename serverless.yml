@@ -15,7 +15,7 @@ provider:
 
 functions:
   getPeoples:
-    handler: src/people/func/getPeoples.handler
+    handler: src/people/functions/getPeoples.handler
     events:
       - httpApi:
           path: /people

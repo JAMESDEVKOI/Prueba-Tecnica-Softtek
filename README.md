@@ -57,4 +57,11 @@ Stack Outputs:
   HttpApiId: kzlyr9uv6e
   ServerlessDeploymentBucketName: softtek-prueba-tecnica-de-serverlessdeploymentbuck-9p6el5xqgykv
   HttpApiUrl: https://kzlyr9uv6e.execute-api.us-east-2.amazonaws.com
+  
+```
+
+### Test
+Execute comand 
+```
+  npm run test
 ```

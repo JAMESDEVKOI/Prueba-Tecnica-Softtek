@@ -28,6 +28,8 @@ export class PeopleController implements Handler<APIGatewayProxyEventV2, Partial
 				...response
 			];
 
+
+
 			return {
 				statusCode: 200,
 				body: results,
