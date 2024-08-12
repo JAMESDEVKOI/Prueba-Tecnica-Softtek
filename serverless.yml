@@ -20,6 +20,12 @@ functions:
       - httpApi:
           path: /people
           method: GET
+  createPeople:
+    handler: src/people/functions/createPeople.handler
+    events:
+      - httpApi:
+          path: /people
+          method: POST
 resources:
   Resources:
     TaskTable:
@@ -33,6 +39,9 @@ resources:
         KeySchema:
         - AttributeName: id
           KeyType: HASH
+
+plugins:
+  - serverless-auto-swagger
 
 
          

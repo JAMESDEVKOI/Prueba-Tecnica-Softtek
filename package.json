@@ -2,7 +2,9 @@
   "dependencies": {
     "aws-lambda": "^1.0.7",
     "aws-sdk": "^2.1672.0",
-    "axios": "^1.7.3"
+    "axios": "^1.7.3",
+    "serverless-auto-swagger": "^3.0.0",
+    "uuid": "^10.0.0"
   },
   "scripts": {
     "test": "jest --ci --detectOpenHandles --config=jest.config.json"
@@ -12,6 +14,7 @@
     "@types/aws-lambda": "^8.10.143",
     "@types/jest": "^29.5.12",
     "@types/node": "^22.2.0",
+    "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^8.0.1",
     "@typescript-eslint/parser": "^8.0.1",
     "dotenv": "^16.4.5",

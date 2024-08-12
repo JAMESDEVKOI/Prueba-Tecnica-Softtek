@@ -11,7 +11,7 @@ const peopleController = new PeopleController(
 )
 export const handler = async (event: APIGatewayProxyEventV2, context: any): Promise<APIGatewayProxyStructuredResultV2> => {
     console.log(JSON.stringify(event), JSON.stringify(context), "awa")
-    const response = await peopleController.exec(event)
+    const response = await peopleController.getPeopleList(event)
 
     return {
         statusCode: 200,

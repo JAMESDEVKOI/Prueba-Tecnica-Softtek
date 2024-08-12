@@ -5,30 +5,30 @@ import { englishToSpanishMapping } from 'src/people/aplication/defined/getAll/en
 
 import { Handler } from 'src/people/aplication/port/in/http/handler'
 import { PeopleUseCase } from 'src/people/aplication/useCases/peopleUseCases'
+import { People } from 'src/people/domain/models/People';
 
 
 export class PeopleController implements Handler<APIGatewayProxyEventV2, Partial<Context>> {
 
 	constructor(
-		private readonly surveyUsecase: PeopleUseCase
+		private readonly peopleUseCase: PeopleUseCase
 	) { }
 
 
+
 	@MapKeysTranslate(englishToSpanishMapping)
-	async exec(event: APIGatewayProxyEventV2) {
+	async getPeopleList(_: APIGatewayProxyEventV2) {
 		try {
 
 			const peoplesList = await axios.get('https://swapi.py4e.com/api/people');
 			const peoples = peoplesList.data.results
 
-			const response = await this.surveyUsecase.getPeopleList() || []
+			const response = await this.peopleUseCase.getPeopleList() || []
 
 			const results = [
 				...peoples,
 				...response
 			];
-
-
 
 			return {
 				statusCode: 200,
@@ -43,40 +43,45 @@ export class PeopleController implements Handler<APIGatewayProxyEventV2, Partial
 		}
 	}
 
+	async getPeople(event: APIGatewayProxyEventV2, context: Partial<Context>) {
+		try {
 
-	// async getPeople(event: APIGatewayProxyEventV2) {
-	// 	try {
-	// 		const { id } = event.pathParameters!
-	// 		console.log(id)
+			const { id } = event.pathParameters!
 
-	// 		const survey = await this.surveyUsecase.getPeople(id ?? '')
+			const response = await this.peopleUseCase.getPeople(id as string)
 
-	// 		return survey
+			return {
+				statusCode: 200,
+				body: response,
+			};
+		} catch (error) {
+			console.log(error)
+			return {
+				statusCode: 500,
+				body: JSON.stringify({ message: (error as Error).message }),
+			}
+		}
+	};
+	async createPeople(event: APIGatewayProxyEventV2, context?: Partial<Context>) {
+		try {
 
-	// 	} catch (error) {
-	// 		console.log(error)
-	// 		return {
-	// 			statusCode: 500,
-	// 			body: JSON.stringify({ message: (error as Error).message }),
-	// 		}
-	// 	}
-	// }
 
-	// async getPeopleList(event: APIGatewayProxyEventV2) {
-	// 	try {
-	// 		const { id } = event.pathParameters!
-	// 		console.log(id)
+			const response = await this.peopleUseCase.addPeople(event.body as unknown as People)
 
-	// 		const survey = await this.surveyUsecase.getPeople(id ?? '')
+			return {
+				statusCode: 200,
+				body: response,
+			};
+		} catch (error) {
+			console.log(error)
+			return {
+				statusCode: 500,
+				body: JSON.stringify({ message: (error as Error).message }),
+			}
+		}
+	};
+	updatePeople: (event: APIGatewayProxyEventV2, context: Partial<Context>) => Promise<unknown>;
+	deletePeople: (event: APIGatewayProxyEventV2, context: Partial<Context>) => Promise<unknown>;
 
-	// 		return survey
 
-	// 	} catch (error) {
-	// 		console.log(error)
-	// 		return {
-	// 			statusCode: 500,
-	// 			body: JSON.stringify({ message: (error as Error).message }),
-	// 		}
-	// 	}
-	// }
 }

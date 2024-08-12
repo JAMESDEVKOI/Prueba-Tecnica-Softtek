@@ -1,4 +1,5 @@
 import AWS from "aws-sdk";
+import { v4 } from "uuid";
 import { People } from "src/people/domain/models/People";
 import { PeopleRepository } from "src/people/domain/service/repositories/PeopleRepositorie";
 
@@ -19,8 +20,26 @@ export class DynamoDBPeopleRepository implements PeopleRepository {
   getPeople(id: string): Promise<People | void> {
     throw new Error("Method not implemented.");
   }
-  addPeople(people: People): Promise<People | void> {
-    throw new Error("Method not implemented.");
+  async addPeople(people: People): Promise<People> {
+    const dynamoDB = new AWS.DynamoDB.DocumentClient();
+
+    const id = v4();
+
+    const { nombre, color_cabello, vehiculos, altura, peliculas, naves_estelares, masa, mundo_natal, editado, color_piel, especies, creado, color_ojos, anio_nacimiento, genero } = JSON.parse(people as any);
+
+    const newPeople = {
+      id,
+      nombre, color_cabello, vehiculos, altura, peliculas, naves_estelares, masa, mundo_natal, editado, color_piel, especies, creado, color_ojos, anio_nacimiento, genero,
+    };
+
+    await dynamoDB
+      .put({
+        TableName: "Sofftek",
+        Item: newPeople,
+      })
+      .promise();
+
+    return newPeople as unknown as People
   }
   updatePeople(id: string, people: People): Promise<People | void> {
     throw new Error("Method not implemented.");
