@@ -1,4 +1,5 @@
 export const englishToSpanishMapping: Record<string, string> = {
+  id: "id",
   birth_year: "anio_nacimiento",
   eye_color: "color_ojos",
   films: "peliculas",

@@ -98,7 +98,6 @@ export class DynamoDBPeopleRepository implements PeopleRepository {
       editado,
       color_piel,
       especies,
-      creado,
       color_ojos,
       anio_nacimiento,
       genero,
@@ -109,7 +108,7 @@ export class DynamoDBPeopleRepository implements PeopleRepository {
         TableName: "Sofftekv2",
         Key: { id },
         UpdateExpression:
-          "set done = :done, title = :title, description = :description",
+          "set nombre = :nombre, color_cabello = :color_cabello, vehiculos = :vehiculos, altura = :altura,peliculas = :peliculas, naves_estelares = :naves_estelares, masa = :masa, mundo_natal = :mundo_natal, editado = :editado, color_piel = :color_piel, especies = :especies, color_ojos = :color_ojos, anio_nacimiento = :anio_nacimiento, genero = :genero",
         ExpressionAttributeValues: {
           ":nombre": nombre,
           ":color_cabello": color_cabello,
@@ -122,7 +121,6 @@ export class DynamoDBPeopleRepository implements PeopleRepository {
           ":editado": editado,
           ":color_piel": color_piel,
           ":especies": especies,
-          ":creado": creado,
           ":color_ojos": color_ojos,
           ":anio_nacimiento": anio_nacimiento,
           ":genero": genero,
