@@ -1,13 +1,16 @@
 import AWS from "aws-sdk";
-import { v4 } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import { People } from "src/people/domain/models/People";
 import { PeopleRepository } from "src/people/domain/service/repositories/PeopleRepositorie";
 
 export class DynamoDBPeopleRepository implements PeopleRepository {
-  async getPeopleList(): Promise<People[]> {
-    const dynamoDB = new AWS.DynamoDB.DocumentClient();
+  private dynamoDB: AWS.DynamoDB.DocumentClient;
 
-    const data = await dynamoDB
+  constructor() {
+    this.dynamoDB = new AWS.DynamoDB.DocumentClient();
+  }
+  async getPeopleList(): Promise<People[]> {
+    const data = await this.dynamoDB
       .scan({
         TableName: "Sofftekv2",
       })
@@ -17,9 +20,7 @@ export class DynamoDBPeopleRepository implements PeopleRepository {
     return tasks as People[];
   }
   async getPeople(id: string): Promise<People | void> {
-    const dynamoDB = new AWS.DynamoDB.DocumentClient();
-
-    const data = await dynamoDB
+    const data = await this.dynamoDB
       .get({
         TableName: "Sofftekv2",
         Key: {
@@ -31,48 +32,14 @@ export class DynamoDBPeopleRepository implements PeopleRepository {
     return data.Item as People;
   }
   async addPeople(people: People): Promise<People> {
-    const dynamoDB = new AWS.DynamoDB.DocumentClient();
+    const id = uuidv4();
 
-    const id = v4();
-
-    const {
-      nombre,
-      color_cabello,
-      vehiculos,
-      altura,
-      peliculas,
-      naves_estelares,
-      masa,
-      mundo_natal,
-      editado,
-      color_piel,
-      especies,
-      creado,
-      color_ojos,
-      anio_nacimiento,
-      genero,
-    } = JSON.parse(people as any);
-
-    const newPeople = {
+    const newPeople: People = {
       id,
-      nombre,
-      color_cabello,
-      vehiculos,
-      altura,
-      peliculas,
-      naves_estelares,
-      masa,
-      mundo_natal,
-      editado,
-      color_piel,
-      especies,
-      creado,
-      color_ojos,
-      anio_nacimiento,
-      genero,
+      ...JSON.parse(people as any),
     };
 
-    await dynamoDB
+    await this.dynamoDB
       .put({
         TableName: "Sofftekv2",
         Item: newPeople,
@@ -85,7 +52,6 @@ export class DynamoDBPeopleRepository implements PeopleRepository {
     id: string,
     people: People
   ): Promise<People | void | string> {
-    const dynamoDB = new AWS.DynamoDB.DocumentClient();
     const {
       nombre,
       color_cabello,
@@ -103,7 +69,7 @@ export class DynamoDBPeopleRepository implements PeopleRepository {
       genero,
     } = JSON.parse(people as any);
 
-    await dynamoDB
+    await this.dynamoDB
       .update({
         TableName: "Sofftekv2",
         Key: { id },
@@ -132,9 +98,7 @@ export class DynamoDBPeopleRepository implements PeopleRepository {
     return "Task updated successfully";
   }
   async deletePeople(id: string): Promise<People | void | string> {
-    const dynamoDB = new AWS.DynamoDB.DocumentClient();
-
-    await dynamoDB
+    await this.dynamoDB
       .delete({
         TableName: "Sofftekv2",
         Key: {
