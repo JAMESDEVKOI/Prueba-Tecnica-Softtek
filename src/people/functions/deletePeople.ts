@@ -12,7 +12,7 @@ const peopleController = new PeopleController(
 export const handler = async (
   event: APIGatewayProxyEventV2
 ): Promise<APIGatewayProxyStructuredResultV2> => {
-  const response = await peopleController.createPeople(event);
+  const response = await peopleController.deletePeople(event);
 
   return {
     statusCode: 200,

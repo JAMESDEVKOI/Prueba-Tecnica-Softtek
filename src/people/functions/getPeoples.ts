@@ -5,17 +5,17 @@ import { DynamoDBPeopleRepository } from '../infrastructure/repositories/DynamoD
 
 
 const peopleController = new PeopleController(
-    new PeopleUseCase(
-        new DynamoDBPeopleRepository()
-    )
+	new PeopleUseCase(
+		new DynamoDBPeopleRepository()
+	)
 )
 export const handler = async (event: APIGatewayProxyEventV2, context: any): Promise<APIGatewayProxyStructuredResultV2> => {
-    console.log(JSON.stringify(event), JSON.stringify(context), "awa")
-    const response = await peopleController.getPeopleList(event)
+	console.log(JSON.stringify(event), JSON.stringify(context), "awa")
+	const response = await peopleController.getPeopleList(event)
 
-    return {
-        statusCode: 200,
-        body: JSON.stringify(response),
-    }
+	return {
+		statusCode: 200,
+		body: JSON.stringify(response),
+	}
 
 }

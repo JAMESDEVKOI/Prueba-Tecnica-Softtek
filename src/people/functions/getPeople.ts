@@ -10,9 +10,10 @@ const peopleController = new PeopleController(
   new PeopleUseCase(new DynamoDBPeopleRepository())
 );
 export const handler = async (
-  event: APIGatewayProxyEventV2
+  event: APIGatewayProxyEventV2,
+  context: any
 ): Promise<APIGatewayProxyStructuredResultV2> => {
-  const response = await peopleController.createPeople(event);
+  const response = await peopleController.getPeople(event);
 
   return {
     statusCode: 200,
