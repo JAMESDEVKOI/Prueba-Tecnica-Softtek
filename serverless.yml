@@ -1,6 +1,6 @@
 org: jamesdev
 
-service: Softtek-Prueba-Tecnica
+service: Softtek-Prueba-Tecnicav2
 
 provider:
   name: aws
@@ -10,7 +10,7 @@ provider:
     - Effect: Allow
       Action:
         - dynamodb:*
-      Resource: "arn:aws:dynamodb:us-east-2:481665110873:table/Sofftek"
+      Resource: "arn:aws:dynamodb:us-east-2:481665110873:table/Sofftekv2"
 
 functions:
   getPeoples:
@@ -37,19 +37,13 @@ functions:
       - httpApi:
           path: /people/{id}
           method: PUT
-  deletePeople:
-    handler: src/people/functions/deletePeople.handler
-    events:
-      - httpApi:
-          path: /people/{id}
-          method: DELETE
 
 resources:
   Resources:
     TaskTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: Sofftek
+        TableName: Sofftekv2
         BillingMode: PAY_PER_REQUEST
         AttributeDefinitions:
           - AttributeName: id
@@ -57,6 +51,9 @@ resources:
         KeySchema:
           - AttributeName: id
             KeyType: HASH
-
-plugins:
-  - serverless-auto-swagger
+package:
+  exclude:
+    - node_modules/**
+    - test/**
+    - .git/**
+    - .env

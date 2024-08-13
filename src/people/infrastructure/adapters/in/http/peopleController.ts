@@ -13,7 +13,10 @@ export class PeopleController
   constructor(private readonly peopleUseCase: PeopleUseCase) {}
 
   @MapKeysTranslate(englishToSpanishMapping)
-  async getPeopleList(_: APIGatewayProxyEventV2) {
+  async getPeopleList(
+    event: APIGatewayProxyEventV2,
+    context?: Partial<Context>
+  ) {
     try {
       const peoplesList = await axios.get("https://swapi.py4e.com/api/people");
       const peoples = peoplesList.data.results;

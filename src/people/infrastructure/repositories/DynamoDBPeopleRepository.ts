@@ -9,7 +9,7 @@ export class DynamoDBPeopleRepository implements PeopleRepository {
 
     const data = await dynamoDB
       .scan({
-        TableName: "Sofftek",
+        TableName: "Sofftekv2",
       })
       .promise();
     const tasks = data.Items;
@@ -21,7 +21,7 @@ export class DynamoDBPeopleRepository implements PeopleRepository {
 
     const data = await dynamoDB
       .get({
-        TableName: "Sofftek",
+        TableName: "Sofftekv2",
         Key: {
           id,
         },
@@ -74,7 +74,7 @@ export class DynamoDBPeopleRepository implements PeopleRepository {
 
     await dynamoDB
       .put({
-        TableName: "Sofftek",
+        TableName: "Sofftekv2",
         Item: newPeople,
       })
       .promise();
@@ -106,7 +106,7 @@ export class DynamoDBPeopleRepository implements PeopleRepository {
 
     await dynamoDB
       .update({
-        TableName: "TaskTable",
+        TableName: "Sofftekv2",
         Key: { id },
         UpdateExpression:
           "set done = :done, title = :title, description = :description",
@@ -138,7 +138,7 @@ export class DynamoDBPeopleRepository implements PeopleRepository {
 
     await dynamoDB
       .delete({
-        TableName: "TaskTable",
+        TableName: "Sofftekv2",
         Key: {
           id,
         },
